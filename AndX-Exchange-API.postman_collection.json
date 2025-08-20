@@ -1,0 +1,205 @@
+{
+  "info": {
+    "name": "AndX Exchange API",
+    "description": "AndX Exchange Service API - Kripto para piyasa verileri",
+    "version": "1.0.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Market Data",
+      "item": [
+        {
+          "name": "Get USDT Market Data (TRY)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/market/usdt",
+              "host": ["{{baseUrl}}"],
+              "path": ["market", "usdt"]
+            },
+            "description": "USDT için market verilerini TRY cinsinden getirir"
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/market/usdt",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["market", "usdt"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"symbol\": \"USDT\",\n  \"coin_id\": \"tether\",\n  \"rank\": 4,\n  \"market_cap_try\": 6834785722634,\n  \"market_cap_usd\": 167017182969,\n  \"volume_24h_usd\": 100722116342,\n  \"circulating_supply\": 167010130246.28,\n  \"change_pct_7d\": -0.004,\n  \"change_pct_30d\": -0.035,\n  \"change_pct_90d\": -0.016,\n  \"ath_change_pct_usd\": -24.42,\n  \"atl_change_pct_usd\": 74.67,\n  \"fear_greed\": 44,\n  \"links\": {\n    \"whitepaper\": \"https://tether.to/wp-content/uploads/2016/06/TetherWhitePaper.pdf\",\n    \"website\": \"https://tether.to/\",\n    \"twitter\": \"https://twitter.com/Tether_to\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Bitcoin Market Data (USD)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/market/btc?fiat=usd",
+              "host": ["{{baseUrl}}"],
+              "path": ["market", "btc"],
+              "query": [
+                {
+                  "key": "fiat",
+                  "value": "usd",
+                  "description": "Fiat currency (try|usd)"
+                }
+              ]
+            },
+            "description": "Bitcoin için market verilerini USD cinsinden getirir"
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/market/btc?fiat=usd",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["market", "btc"],
+                  "query": [
+                    {
+                      "key": "fiat",
+                      "value": "usd"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"symbol\": \"BTC\",\n  \"coin_id\": \"bitcoin\",\n  \"rank\": 1,\n  \"market_cap_try\": 92562894018804,\n  \"market_cap_usd\": 2262703217539,\n  \"volume_24h_usd\": 45225019762,\n  \"circulating_supply\": 19909075,\n  \"change_pct_7d\": -6.69,\n  \"change_pct_30d\": -3.54,\n  \"change_pct_90d\": 2.14,\n  \"ath_change_pct_usd\": -8.56,\n  \"atl_change_pct_usd\": 167282.97,\n  \"fear_greed\": 44,\n  \"links\": {\n    \"whitepaper\": \"https://bitcoin.org/bitcoin.pdf\",\n    \"website\": \"http://www.bitcoin.org\",\n    \"twitter\": \"https://twitter.com/bitcoin\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Ethereum Market Data",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/market/eth",
+              "host": ["{{baseUrl}}"],
+              "path": ["market", "eth"]
+            },
+            "description": "Ethereum için market verilerini getirir"
+          }
+        },
+        {
+          "name": "Invalid Cryptocurrency",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/market/invalidcoin",
+              "host": ["{{baseUrl}}"],
+              "path": ["market", "invalidcoin"]
+            },
+            "description": "Geçersiz kripto para sembolü ile hata testi"
+          },
+          "response": [
+            {
+              "name": "404 Not Found",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/market/invalidcoin",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["market", "invalidcoin"]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"statusCode\": 404,\n  \"timestamp\": \"2025-08-20T18:51:06.466Z\",\n  \"path\": \"/market/invalidcoin\",\n  \"method\": \"GET\",\n  \"error\": \"not_found\",\n  \"message\": \"Cryptocurrency 'invalidcoin' not found\",\n  \"requestId\": \"47196144-0250-4b55-a9a8-5dc38df53797\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Health Check",
+      "item": [
+        {
+          "name": "Get Health Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["health"]
+            },
+            "description": "API'nin sağlık durumunu kontrol eder"
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/health",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["health"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": \"ok\",\n  \"timestamp\": \"2025-08-20T18:49:31.456Z\",\n  \"uptime\": 23.09\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

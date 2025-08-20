@@ -1,98 +1,197 @@
+# 🚀 AndX Exchange Service
+
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
+  <img src="https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white" alt="NestJS" />
+  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js" />
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## 📋 Açıklama
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+AndX Exchange Service, kripto para piyasa verilerini sağlayan modern ve güvenli RESTful API servisidir. CoinGecko ve Alternative.me API'lerini kullanarak gerçek zamanlı market verilerini sunar.
 
-## Description
+### ✨ Özellikler
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- 🔄 **Gerçek Zamanlı Veriler**: CoinGecko API entegrasyonu
+- 📊 **Kapsamlı Market Verileri**: Fiyat, hacim, market cap, değişim oranları
+- 😨 **Korku & Hırs Endeksi**: Alternative.me API entegrasyonu
+- 💱 **Multi-Currency**: TRY ve USD desteği
+- ⚡ **Yüksek Performans**: Akıllı önbellekleme sistemi
+- 🛡️ **Güvenlik**: Rate limiting, CORS, security headers
+- 📝 **Comprehensive Logging**: Request tracking ve error handling
+- 🔍 **90+ Kripto Para**: Bitcoin, Ethereum, USDT ve daha fazlası
 
-## Project setup
+### 🎯 Desteklenen Metrikler
 
-```bash
-$ npm install
-```
+- Piyasa değeri (TRY/USD)
+- 24 saatlik işlem hacmi
+- Dolaşımdaki arz
+- 7/30/90 günlük değişim oranları
+- ATH/ATL değişim yüzdeleri
+- Market cap sıralaması
+- Sosyal linkler (Website, Twitter, Whitepaper)
 
-## Compile and run the project
+## 🚀 Hızlı Başlangıç
+
+### Kurulum
 
 ```bash
-# development
-$ npm run start
+# Bağımlılıkları yükle
+npm install
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+# Environment dosyasını oluştur
+cp .env.example .env
 ```
 
-## Run tests
+### Çalıştırma
 
 ```bash
-# unit tests
-$ npm run test
+# Development mode
+npm run start:dev
 
-# e2e tests
-$ npm run test:e2e
+# Production build
+npm run build
+npm run start:prod
 
-# test coverage
-$ npm run test:cov
+# Debug mode
+npm run start:debug
 ```
 
-## Deployment
+### 🔧 Environment Yapılandırması
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+`.env` dosyasında aşağıdaki değişkenleri ayarlayın:
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+```env
+PORT=3000
+COINGECKO_API_KEY=your_api_key_here
+ALLOW_ORIGINS=http://localhost:3000,http://localhost:3001
+RATE_LIMIT_TTL=60
+RATE_LIMIT_LIMIT=60
+DEFAULT_CACHE_TTL_MS=60000
+```
+
+## 📊 API Kullanımı
+
+### Temel Endpoint'ler
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+# USDT market verisi (TRY)
+GET http://localhost:3000/market/usdt
+
+# Bitcoin market verisi (USD)
+GET http://localhost:3000/market/btc?fiat=usd
+
+# Sağlık kontrolü
+GET http://localhost:3000/health
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### Response Örneği
 
-## Resources
+```json
+{
+  "symbol": "USDT",
+  "coin_id": "tether",
+  "rank": 4,
+  "market_cap_try": 6834785722634,
+  "market_cap_usd": 167017182969,
+  "volume_24h_usd": 100722116342,
+  "circulating_supply": 167010130246.28,
+  "change_pct_7d": -0.004,
+  "change_pct_30d": -0.035,
+  "change_pct_90d": -0.016,
+  "ath_change_pct_usd": -24.42,
+  "atl_change_pct_usd": 74.67,
+  "fear_greed": 44,
+  "links": {
+    "whitepaper": "https://tether.to/wp-content/uploads/2016/06/TetherWhitePaper.pdf",
+    "website": "https://tether.to/",
+    "twitter": "https://twitter.com/Tether_to"
+  }
+}
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+## 🧪 Test
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+```bash
+# Unit testler
+npm run test
 
-## Support
+# E2E testler
+npm run test:e2e
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+# Test coverage
+npm run test:cov
+```
 
-## Stay in touch
+## 📚 Dokümantasyon
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### API Dokümantasyonu
 
-## License
+- **[API Documentation](./API-DOCUMENTATION.md)** - Detaylı API dokümantasyonu
+- **[OpenAPI Spec](./openapi.yaml)** - Swagger/OpenAPI 3.0 spesifikasyonu
+- **[Postman Collection](./AndX-Exchange-API.postman_collection.json)** - Test için Postman koleksiyonu
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### Desteklenen Kripto Paralar
+
+- Bitcoin (BTC), Ethereum (ETH), Tether (USDT)
+- BNB, Solana (SOL), XRP, Dogecoin (DOGE)
+- Cardano (ADA), TRON (TRX), Avalanche (AVAX)
+- Ve 90+ kripto para daha...
+
+## 🏗️ Mimari
+
+```
+src/
+├── app.module.ts           # Ana modül
+├── main.ts                 # Uygulama giriş noktası
+├── common/
+│   └── filters/            # Global exception filter
+└── market/
+    ├── market.module.ts    # Market modülü
+    ├── market.controller.ts # REST controller
+    ├── market.service.ts   # İş mantığı
+    ├── coingecko.service.ts # CoinGecko API client
+    ├── fng.service.ts      # Fear & Greed API client
+    ├── ids.ts              # Symbol-ID mapping
+    ├── dto/                # Data transfer objects
+    └── utils/              # Utility fonksiyonlar
+```
+
+## 🔒 Güvenlik
+
+- **Rate Limiting**: IP başına 60 istek/dakika
+- **CORS**: Yapılandırılabilir origin kontrolü
+- **Security Headers**: Helmet middleware
+- **Input Validation**: Class-validator ile DTO validation
+- **Error Handling**: Güvenli hata mesajları
+
+## 🚀 Deployment
+
+### Docker ile Deployment
+
+```bash
+# Docker image oluştur
+docker build -t andx-exchange-service .
+
+# Container çalıştır
+docker run -p 3000:3000 --env-file .env andx-exchange-service
+```
+
+### Production Checklist
+
+- [ ] Environment variables ayarlandı
+- [ ] CoinGecko API key alındı
+- [ ] Rate limiting yapılandırıldı
+- [ ] CORS origins belirlendi
+- [ ] Monitoring ve logging aktif
+- [ ] Health check endpoint test edildi
+
+## 📞 İletişim
+
+- **Geliştirici**: AndX Tech Team
+- **Email**: support@andxtech.com
+- **Version**: 1.0.0
+
+## 📄 Lisans
+
+Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICENSE) dosyasına bakın.
