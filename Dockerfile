@@ -48,7 +48,7 @@ RUN chown nestjs:nodejs .env
 
 USER nestjs
 
-EXPOSE 3000
+EXPOSE 80
 
 ENV PORT=3000
 

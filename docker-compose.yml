@@ -8,7 +8,7 @@ services:
     container_name: andx-exchange-service
     restart: unless-stopped
     ports:
-      - "3002:3000"
+      - '80:3000'
     environment:
       - NODE_ENV=production
       - PORT=3000
@@ -18,7 +18,13 @@ services:
       - DEFAULT_CACHE_TTL_MS=${DEFAULT_CACHE_TTL_MS:-60000}
       - ALLOW_ORIGINS=${ALLOW_ORIGINS:-*}
     healthcheck:
-      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) })"]
+      test:
+        [
+          'CMD',
+          'node',
+          '-e',
+          "require('http').get('http://localhost:3000/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) })",
+        ]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -32,8 +38,8 @@ services:
     container_name: andx-nginx
     restart: unless-stopped
     ports:
-      - "80:80"
-      - "443:443"
+      - '8080:80'
+      - '443:443'
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
       - ./ssl:/etc/nginx/ssl:ro

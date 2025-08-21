@@ -282,7 +282,7 @@ main() {
     
     echo ""
     print_status "Next steps:"
-    echo "  - Run the image: docker run -p 3002:3000 $IMAGE_NAME:$TAG"
+    echo "  - Run the image: docker run -p 80:3000 $IMAGE_NAME:$TAG"
     echo "  - Use with docker-compose: docker-compose up"
     if [[ "$PUSH_TO_REGISTRY" == true ]]; then
         echo "  - Image is available in registry: $IMAGE_NAME:$TAG"

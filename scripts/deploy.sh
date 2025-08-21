@@ -286,11 +286,11 @@ main() {
     echo ""
     print_status "Application is now running at:"
     if [[ "$ENVIRONMENT" == "development" ]]; then
-        echo "  - API: http://localhost:3002"
-        echo "  - Swagger: http://localhost:3002/api"
+        echo "  - API: http://localhost"
+        echo "  - Swagger: http://localhost/api"
     else
-        echo "  - API: http://localhost:3002"
-        echo "  - Swagger: http://localhost:3002/api"
+        echo "  - API: http://localhost"
+        echo "  - Swagger: http://localhost/api"
     fi
 }
 

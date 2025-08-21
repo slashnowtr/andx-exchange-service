@@ -13,17 +13,19 @@ This guide covers deployment options for the AndX Exchange Service using Docker 
 ### Environment Setup
 
 1. Copy the environment template:
+
 ```bash
 cp .env.example .env
 ```
 
 2. Edit `.env` file with your configuration:
+
 ```bash
 # Required: Set your CoinGecko API key
 COINGECKO_API_KEY=your_api_key_here
 
 # Optional: Adjust other settings as needed
-PORT=3002
+PORT=3000
 RATE_LIMIT_TTL=60
 RATE_LIMIT_LIMIT=60
 ```
@@ -99,6 +101,7 @@ Use the specialized build script for more control:
 Main deployment script with comprehensive features:
 
 **Options:**
+
 - `-e, --environment ENV`: Set environment (development|production)
 - `-b, --build-only`: Only build, don't deploy
 - `-s, --skip-tests`: Skip running tests
@@ -106,6 +109,7 @@ Main deployment script with comprehensive features:
 - `-h, --help`: Show help
 
 **Features:**
+
 - Automated testing before deployment
 - Health checks after deployment
 - Backup of current deployment
@@ -117,6 +121,7 @@ Main deployment script with comprehensive features:
 Specialized Docker image building:
 
 **Options:**
+
 - `-e, --environment ENV`: Set environment
 - `-t, --tag TAG`: Set Docker image tag
 - `-p, --push`: Push to registry
@@ -124,6 +129,7 @@ Specialized Docker image building:
 - `-r, --registry URL`: Set registry URL
 
 **Features:**
+
 - Multi-tag support
 - Security scanning (if tools available)
 - Image testing
@@ -134,6 +140,7 @@ Specialized Docker image building:
 Clean up Docker resources:
 
 **Options:**
+
 - `-a, --all`: Clean all resources
 - `-i, --images`: Clean only images
 - `-c, --containers`: Clean only containers
@@ -146,6 +153,7 @@ Clean up Docker resources:
 ### With Nginx Reverse Proxy
 
 The included `nginx.conf` provides:
+
 - Load balancing
 - Rate limiting
 - SSL termination (when configured)
@@ -176,6 +184,7 @@ ALLOW_ORIGINS=https://yourdomain.com
 ### Health Checks
 
 The application includes health checks at `/health` endpoint. Docker containers are configured with health checks that:
+
 - Check every 30 seconds
 - Timeout after 10 seconds
 - Retry 3 times
@@ -190,7 +199,7 @@ Check application status:
 docker-compose logs -f andx-exchange-service
 
 # Check health
-curl http://localhost:3002/health
+curl http://localhost/health
 
 # View container status
 docker-compose ps
@@ -209,6 +218,7 @@ docker-compose -f docker-compose.dev.yml logs -f
 ```
 
 The development setup includes:
+
 - Volume mounting for hot reload
 - Development-specific environment
 - Exposed debugging ports
@@ -218,17 +228,20 @@ The development setup includes:
 ### Common Issues
 
 1. **Port already in use:**
+
    ```bash
    # Change port in .env file or stop conflicting service
-   sudo lsof -i :3002
+   sudo lsof -i :80
    ```
 
 2. **Permission denied on scripts:**
+
    ```bash
    chmod +x scripts/*.sh
    ```
 
 3. **Docker daemon not running:**
+
    ```bash
    # Start Docker service
    sudo systemctl start docker  # Linux
@@ -263,12 +276,14 @@ docker-compose exec andx-exchange-service sh
 For production environments:
 
 1. **Adjust rate limiting:**
+
    ```bash
    RATE_LIMIT_TTL=60
    RATE_LIMIT_LIMIT=100
    ```
 
 2. **Cache configuration:**
+
    ```bash
    DEFAULT_CACHE_TTL_MS=300000  # 5 minutes
    ```
