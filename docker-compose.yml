@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  andx-exchange-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: andx-exchange-service
+    restart: unless-stopped
+    ports:
+      - "3002:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - COINGECKO_API_KEY=${COINGECKO_API_KEY:-}
+      - RATE_LIMIT_TTL=${RATE_LIMIT_TTL:-60}
+      - RATE_LIMIT_LIMIT=${RATE_LIMIT_LIMIT:-60}
+      - DEFAULT_CACHE_TTL_MS=${DEFAULT_CACHE_TTL_MS:-60000}
+      - ALLOW_ORIGINS=${ALLOW_ORIGINS:-*}
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) })"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - andx-network
+
+  # Optional: Add a reverse proxy (nginx) for production
+  nginx:
+    image: nginx:alpine
+    container_name: andx-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - andx-exchange-service
+    networks:
+      - andx-network
+    profiles:
+      - production
+
+networks:
+  andx-network:
+    driver: bridge
+
+volumes:
+  andx-data:
