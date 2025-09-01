@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  andx-exchange-service-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: andx-exchange-service-dev
+    restart: unless-stopped
+    ports:
+      - '80:3000'
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - COINGECKO_API_KEY=${COINGECKO_API_KEY:-}
+      - RATE_LIMIT_TTL=${RATE_LIMIT_TTL:-60}
+      - RATE_LIMIT_LIMIT=${RATE_LIMIT_LIMIT:-60}
+      - DEFAULT_CACHE_TTL_MS=${DEFAULT_CACHE_TTL_MS:-60000}
+      - ALLOW_ORIGINS=${ALLOW_ORIGINS:-*}
+    volumes:
+      - .:/app
+      - /app/node_modules
+    networks:
+      - andx-dev-network
+
+networks:
+  andx-dev-network:
+    driver: bridge
