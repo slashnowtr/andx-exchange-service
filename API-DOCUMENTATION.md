@@ -2,7 +2,7 @@
 
 ## 📋 Genel Bakış
 
-AndX Exchange Service, kripto para piyasa verilerini sağlayan RESTful API servisidir. CoinGecko ve Alternative.me API'lerini kullanarak gerçek zamanlı market verilerini sunar.
+AndX Exchange Service, kripto para piyasa verilerini sağlayan RESTful API servisidir. Gerçek zamanlı market verilerini sunar.
 
 **Base URL:** `http://localhost:3000`
 
@@ -52,6 +52,8 @@ GET /market/eth
   "market_cap_usd": "number|null", // Piyasa değeri (USD)
   "volume_24h_usd": "number|null", // 24 saatlik hacim (USD)
   "circulating_supply": "number|null", // Dolaşımdaki arz
+  "total_supply": "number|null", // Toplam arz
+  "max_supply": "number|null", // Maksimum arz
   "change_pct_7d": "number|null", // 7 günlük değişim (%)
   "change_pct_30d": "number|null", // 30 günlük değişim (%)
   "change_pct_90d": "number|null", // 90 günlük değişim (%)
@@ -79,6 +81,8 @@ GET /market/eth
   "market_cap_usd": 167017182969,
   "volume_24h_usd": 100722116342,
   "circulating_supply": 167010130246.28,
+  "total_supply": 167010130246.28,
+  "max_supply": null,
   "change_pct_7d": -0.004,
   "change_pct_30d": -0.035,
   "change_pct_90d": -0.016,

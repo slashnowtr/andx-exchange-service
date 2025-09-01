@@ -56,6 +56,8 @@ export class MarketService {
         market_cap_usd: market?.market_cap?.usd ?? null,
         volume_24h_usd: market?.total_volume?.usd ?? null,
         circulating_supply: market?.circulating_supply ?? null,
+        total_supply: market?.total_supply ?? null,
+        max_supply: market?.max_supply ?? null,
         change_pct_7d: this.getChangePercentage(market, '7d'),
         change_pct_30d: this.getChangePercentage(market, '30d'),
         change_pct_90d: change90d,

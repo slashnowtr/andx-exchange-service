@@ -91,6 +91,20 @@ export class MarketResponseDto {
   circulating_supply: number | null;
 
   @ApiProperty({
+    description: 'Toplam arz',
+    example: 167010130246.28,
+    nullable: true,
+  })
+  total_supply: number | null;
+
+  @ApiProperty({
+    description: 'Maksimum arz',
+    example: 21000000,
+    nullable: true,
+  })
+  max_supply: number | null;
+
+  @ApiProperty({
     description: '7 günlük değişim (%)',
     example: -0.004,
     nullable: true,

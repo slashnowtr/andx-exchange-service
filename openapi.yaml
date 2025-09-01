@@ -4,7 +4,7 @@ info:
   description: |
     AndX Exchange Service, kripto para piyasa verilerini sağlayan RESTful API servisidir. 
     CoinGecko ve Alternative.me API'lerini kullanarak gerçek zamanlı market verilerini sunar.
-    
+
     ## Özellikler
     - Gerçek zamanlı kripto para market verileri
     - 90+ kripto para desteği
@@ -12,7 +12,7 @@ info:
     - Korku & Hırs endeksi
     - Rate limiting ve caching
     - Comprehensive error handling
-    
+
   version: 1.0.0
   contact:
     name: AndX Tech Team
@@ -62,8 +62,8 @@ paths:
                 usdt_try:
                   summary: USDT (TRY)
                   value:
-                    symbol: "USDT"
-                    coin_id: "tether"
+                    symbol: 'USDT'
+                    coin_id: 'tether'
                     rank: 4
                     market_cap_try: 6834785722634
                     market_cap_usd: 167017182969
@@ -76,14 +76,14 @@ paths:
                     atl_change_pct_usd: 74.67
                     fear_greed: 44
                     links:
-                      whitepaper: "https://tether.to/wp-content/uploads/2016/06/TetherWhitePaper.pdf"
-                      website: "https://tether.to/"
-                      twitter: "https://twitter.com/Tether_to"
+                      whitepaper: 'https://tether.to/wp-content/uploads/2016/06/TetherWhitePaper.pdf'
+                      website: 'https://tether.to/'
+                      twitter: 'https://twitter.com/Tether_to'
                 btc_usd:
                   summary: Bitcoin (USD)
                   value:
-                    symbol: "BTC"
-                    coin_id: "bitcoin"
+                    symbol: 'BTC'
+                    coin_id: 'bitcoin'
                     rank: 1
                     market_cap_try: 92562894018804
                     market_cap_usd: 2262703217539
@@ -96,9 +96,9 @@ paths:
                     atl_change_pct_usd: 167282.97
                     fear_greed: 44
                     links:
-                      whitepaper: "https://bitcoin.org/bitcoin.pdf"
-                      website: "http://www.bitcoin.org"
-                      twitter: "https://twitter.com/bitcoin"
+                      whitepaper: 'https://bitcoin.org/bitcoin.pdf'
+                      website: 'http://www.bitcoin.org'
+                      twitter: 'https://twitter.com/bitcoin'
         '400':
           description: Geçersiz istek parametresi
           content:
@@ -107,12 +107,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 statusCode: 400
-                timestamp: "2025-08-20T18:50:00.000Z"
-                path: "/market/btc"
-                method: "GET"
-                error: "bad_request"
-                message: "Invalid fiat currency"
-                requestId: "12345678-1234-5678-9abc-123456789012"
+                timestamp: '2025-08-20T18:50:00.000Z'
+                path: '/market/btc'
+                method: 'GET'
+                error: 'bad_request'
+                message: 'Invalid fiat currency'
+                requestId: '12345678-1234-5678-9abc-123456789012'
         '404':
           description: Kripto para bulunamadı
           content:
@@ -121,12 +121,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 statusCode: 404
-                timestamp: "2025-08-20T18:51:06.466Z"
-                path: "/market/invalidcoin"
-                method: "GET"
-                error: "not_found"
+                timestamp: '2025-08-20T18:51:06.466Z'
+                path: '/market/invalidcoin'
+                method: 'GET'
+                error: 'not_found'
                 message: "Cryptocurrency 'invalidcoin' not found"
-                requestId: "47196144-0250-4b55-a9a8-5dc38df53797"
+                requestId: '47196144-0250-4b55-a9a8-5dc38df53797'
         '429':
           description: Rate limit aşıldı
           content:
@@ -135,12 +135,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 statusCode: 429
-                timestamp: "2025-08-20T18:52:15.123Z"
-                path: "/market/btc"
-                method: "GET"
-                error: "too_many_requests"
-                message: "Rate limit exceeded. Try again later."
-                requestId: "12345678-1234-5678-9abc-123456789012"
+                timestamp: '2025-08-20T18:52:15.123Z'
+                path: '/market/btc'
+                method: 'GET'
+                error: 'too_many_requests'
+                message: 'Rate limit exceeded. Try again later.'
+                requestId: '12345678-1234-5678-9abc-123456789012'
         '502':
           description: Upstream API hatası
           content:
@@ -149,12 +149,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
               example:
                 statusCode: 502
-                timestamp: "2025-08-20T18:53:20.789Z"
-                path: "/market/eth"
-                method: "GET"
-                error: "upstream_error"
-                message: "CoinGecko API error: Request timeout"
-                requestId: "87654321-4321-8765-cba9-876543210987"
+                timestamp: '2025-08-20T18:53:20.789Z'
+                path: '/market/eth'
+                method: 'GET'
+                error: 'upstream_error'
+                message: 'CoinGecko API error: Request timeout'
+                requestId: '87654321-4321-8765-cba9-876543210987'
 
   /health:
     get:
@@ -170,8 +170,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/HealthResponse'
               example:
-                status: "ok"
-                timestamp: "2025-08-20T18:49:31.456Z"
+                status: 'ok'
+                timestamp: '2025-08-20T18:49:31.456Z'
                 uptime: 23.09
 
 components:
@@ -182,11 +182,11 @@ components:
         symbol:
           type: string
           description: Kripto para sembolü (büyük harf)
-          example: "USDT"
+          example: 'USDT'
         coin_id:
           type: string
           description: CoinGecko ID
-          example: "tether"
+          example: 'tether'
         rank:
           type: integer
           nullable: true
@@ -212,6 +212,16 @@ components:
           nullable: true
           description: Dolaşımdaki arz
           example: 167010130246.28
+        total_supply:
+          type: number
+          nullable: true
+          description: Toplam arz
+          example: 167010130246.28
+        max_supply:
+          type: number
+          nullable: true
+          description: Maksimum arz
+          example: 21000000
         change_pct_7d:
           type: number
           nullable: true
@@ -256,17 +266,17 @@ components:
           type: string
           nullable: true
           description: Whitepaper URL
-          example: "https://tether.to/wp-content/uploads/2016/06/TetherWhitePaper.pdf"
+          example: 'https://tether.to/wp-content/uploads/2016/06/TetherWhitePaper.pdf'
         website:
           type: string
           nullable: true
           description: Resmi website URL
-          example: "https://tether.to/"
+          example: 'https://tether.to/'
         twitter:
           type: string
           nullable: true
           description: Twitter profil URL
-          example: "https://twitter.com/Tether_to"
+          example: 'https://twitter.com/Tether_to'
 
     HealthResponse:
       type: object
@@ -274,12 +284,12 @@ components:
         status:
           type: string
           description: API durumu
-          example: "ok"
+          example: 'ok'
         timestamp:
           type: string
           format: date-time
           description: Response timestamp
-          example: "2025-08-20T18:49:31.456Z"
+          example: '2025-08-20T18:49:31.456Z'
         uptime:
           type: number
           description: Uptime (saniye)
@@ -300,19 +310,19 @@ components:
           type: string
           format: date-time
           description: Hata timestamp'i
-          example: "2025-08-20T18:51:06.466Z"
+          example: '2025-08-20T18:51:06.466Z'
         path:
           type: string
           description: İstek path'i
-          example: "/market/invalidcoin"
+          example: '/market/invalidcoin'
         method:
           type: string
           description: HTTP metodu
-          example: "GET"
+          example: 'GET'
         error:
           type: string
           description: Hata tipi
-          example: "not_found"
+          example: 'not_found'
         message:
           type: string
           description: Hata mesajı
@@ -320,7 +330,7 @@ components:
         requestId:
           type: string
           description: Benzersiz istek ID'si
-          example: "47196144-0250-4b55-a9a8-5dc38df53797"
+          example: '47196144-0250-4b55-a9a8-5dc38df53797'
       required:
         - statusCode
         - timestamp

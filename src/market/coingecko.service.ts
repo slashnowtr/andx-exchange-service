@@ -20,6 +20,8 @@ export interface CoinGeckoResponse {
       usd: number;
     };
     circulating_supply: number;
+    total_supply: number | null;
+    max_supply: number | null;
     price_change_percentage_7d: number;
     price_change_percentage_30d: number;
     price_change_percentage_7d_in_currency?: {

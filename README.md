@@ -25,7 +25,7 @@ AndX Exchange Service, kripto para piyasa verilerini sağlayan modern ve güvenl
 
 - Piyasa değeri (TRY/USD)
 - 24 saatlik işlem hacmi
-- Dolaşımdaki arz
+- Dolaşımdaki arz, toplam arz, maksimum arz
 - 7/30/90 günlük değişim oranları
 - ATH/ATL değişim yüzdeleri
 - Market cap sıralaması
@@ -96,6 +96,8 @@ GET http://localhost:3000/health
   "market_cap_usd": 167017182969,
   "volume_24h_usd": 100722116342,
   "circulating_supply": 167010130246.28,
+  "total_supply": 167010130246.28,
+  "max_supply": null,
   "change_pct_7d": -0.004,
   "change_pct_30d": -0.035,
   "change_pct_90d": -0.016,
