@@ -122,7 +122,99 @@ GET /market/eth
 }
 ```
 
-### 2. Sağlık Kontrolü
+### 2. Çoklu Market Verisi
+
+Birden fazla kripto para için detaylı market bilgilerini getirir.
+
+**Endpoint:** `POST /market/bulk`
+
+#### Parametreler
+
+| Parametre | Tip    | Zorunlu | Açıklama                        | Örnek                    |
+| --------- | ------ | ------- | ------------------------------- | ------------------------ |
+| `symbols` | array  | Evet    | Kripto para sembolleri listesi  | `["btc", "eth", "usdt"]` |
+| `fiat`    | string | Hayır   | Fiat para birimi (`try`, `usd`) | `try`                    |
+
+#### Request Örneği
+
+```bash
+POST /market/bulk
+Content-Type: application/json
+
+{
+  "symbols": ["btc", "eth", "usdt"],
+  "fiat": "try"
+}
+```
+
+#### Response Örneği
+
+```json
+{
+  "data": [
+    {
+      "symbol": "BTC",
+      "coin_id": "bitcoin",
+      "rank": 1,
+      "market_cap_try": 2150000000000,
+      "market_cap_usd": 1200000000000,
+      "volume_24h_usd": 25000000000,
+      "circulating_supply": 19909075,
+      "total_supply": 19909075,
+      "max_supply": 21000000,
+      "change_pct_7d": -6.69,
+      "change_pct_30d": -3.54,
+      "change_pct_90d": 2.14,
+      "ath_change_pct_usd": -8.56,
+      "atl_change_pct_usd": 167282.97,
+      "fear_greed": 44,
+      "links": {
+        "whitepaper": "https://bitcoin.org/bitcoin.pdf",
+        "website": "http://www.bitcoin.org",
+        "twitter": "https://twitter.com/bitcoin"
+      }
+    },
+    {
+      "symbol": "ETH",
+      "coin_id": "ethereum",
+      "rank": 2,
+      "market_cap_try": 850000000000,
+      "market_cap_usd": 475000000000,
+      "volume_24h_usd": 15000000000,
+      "circulating_supply": 120426315,
+      "total_supply": 120426315,
+      "max_supply": null,
+      "change_pct_7d": -5.23,
+      "change_pct_30d": -2.15,
+      "change_pct_90d": 8.45,
+      "ath_change_pct_usd": -15.32,
+      "atl_change_pct_usd": 45623.12,
+      "fear_greed": 44,
+      "links": {
+        "whitepaper": "https://ethereum.org/en/whitepaper/",
+        "website": "https://ethereum.org/",
+        "twitter": "https://twitter.com/ethereum"
+      }
+    }
+  ],
+  "count": 2,
+  "failed": ["invalidcoin"]
+}
+```
+
+#### Hata Durumları
+
+**400 Bad Request - Boş Liste:**
+
+```json
+{
+  "statusCode": 400,
+  "error": "validation_error",
+  "message": "Liste boş olamaz, en azından 1 coin olmalı"
+}
+```
+
+### 3. Sağlık Kontrolü
 
 API'nin durumunu kontrol eder.
 
