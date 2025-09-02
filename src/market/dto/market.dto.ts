@@ -1,5 +1,11 @@
-import { IsOptional, IsIn } from 'class-validator';
-import { Transform } from 'class-transformer';
+import {
+  IsOptional,
+  IsIn,
+  IsArray,
+  ArrayMinSize,
+  IsString,
+} from 'class-validator';
+import { Transform, Type } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class MarketQueryDto {
@@ -151,4 +157,57 @@ export class MarketResponseDto {
     type: MarketLinksDto,
   })
   links: MarketLinksDto;
+}
+
+export class BulkMarketQueryDto {
+  @ApiProperty({
+    description: 'Kripto para sembolleri listesi',
+    example: ['btc', 'eth', 'usdt'],
+    type: [String],
+    minItems: 1,
+  })
+  @IsArray()
+  @ArrayMinSize(1, { message: 'Liste boş olamaz, en azından 1 coin olmalı' })
+  @IsString({ each: true })
+  @Transform(({ value }) =>
+    Array.isArray(value)
+      ? value.map((v) => (typeof v === 'string' ? v.toLowerCase() : v))
+      : value,
+  )
+  symbols: string[];
+
+  @ApiProperty({
+    description: 'Fiat para birimi',
+    enum: ['try', 'usd'],
+    default: 'try',
+    example: 'try',
+    required: false,
+  })
+  @IsOptional()
+  @IsIn(['try', 'usd'])
+  @Transform(({ value }: { value: unknown }) =>
+    typeof value === 'string' ? value.toLowerCase() : value,
+  )
+  fiat?: 'try' | 'usd' = 'try';
+}
+
+export class BulkMarketResponseDto {
+  @ApiProperty({
+    description: 'Market verileri listesi',
+    type: [MarketResponseDto],
+  })
+  data: MarketResponseDto[];
+
+  @ApiProperty({
+    description: 'Toplam coin sayısı',
+    example: 3,
+  })
+  count: number;
+
+  @ApiProperty({
+    description: 'Başarısız olan coinler',
+    example: ['invalidcoin'],
+    type: [String],
+  })
+  failed: string[];
 }

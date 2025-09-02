@@ -3,7 +3,7 @@ import { CoinGeckoService } from './coingecko.service';
 import { FngService } from './fng.service';
 import { resolveId } from './ids';
 import { pctChange, firstLastValid } from './utils/math';
-import { MarketResponseDto } from './dto/market.dto';
+import { MarketResponseDto, BulkMarketResponseDto } from './dto/market.dto';
 
 @Injectable()
 export class MarketService {
@@ -126,6 +126,51 @@ export class MarketService {
     }
 
     return null;
+  }
+
+  async getBulkMarketData(
+    symbols: string[],
+    fiat: 'try' | 'usd' = 'try',
+  ): Promise<BulkMarketResponseDto> {
+    if (!symbols || symbols.length === 0) {
+      throw new HttpException(
+        {
+          error: 'validation_error',
+          message: 'Liste boş olamaz, en azından 1 coin olmalı',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    this.logger.debug(
+      `Processing bulk market request for symbols: ${symbols.join(', ')}, fiat: ${fiat}`,
+    );
+
+    const results: MarketResponseDto[] = [];
+    const failed: string[] = [];
+
+    // Process each symbol
+    for (const symbol of symbols) {
+      try {
+        const marketData = await this.getMarketCard(symbol, fiat);
+        results.push(marketData);
+      } catch (error) {
+        this.logger.warn(`Failed to fetch data for symbol: ${symbol}`, error);
+        failed.push(symbol);
+      }
+    }
+
+    const response: BulkMarketResponseDto = {
+      data: results,
+      count: results.length,
+      failed,
+    };
+
+    this.logger.debug(
+      `Bulk market request completed. Success: ${results.length}, Failed: ${failed.length}`,
+    );
+
+    return response;
   }
 
   private getWebsiteUrl(homepage: string[] | undefined): string | null {
