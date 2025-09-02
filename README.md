@@ -81,6 +81,14 @@ GET http://localhost:3000/market/usdt
 # Bitcoin market verisi (USD)
 GET http://localhost:3000/market/btc?fiat=usd
 
+# Çoklu market verisi
+POST http://localhost:3000/market/bulk
+Content-Type: application/json
+{
+  "symbols": ["btc", "eth", "usdt"],
+  "fiat": "try"
+}
+
 # Sağlık kontrolü
 GET http://localhost:3000/health
 ```

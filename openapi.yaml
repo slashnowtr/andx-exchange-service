@@ -156,6 +156,73 @@ paths:
                 message: 'CoinGecko API error: Request timeout'
                 requestId: '87654321-4321-8765-cba9-876543210987'
 
+  /market/bulk:
+    post:
+      tags:
+        - Market Data
+      summary: Çoklu kripto para market verilerini getirir
+      description: |
+        Belirtilen kripto para listesi için detaylı market bilgilerini getirir.
+        Veriler CoinGecko ve Alternative.me API'lerinden alınır.
+
+        **Özellikler:**
+        - En az 1 coin sembolü gereklidir
+        - Başarısız olan coinler 'failed' listesinde döner
+        - Başarılı olan coinler 'data' listesinde döner
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BulkMarketRequest'
+            examples:
+              basic:
+                summary: Temel kullanım
+                value:
+                  symbols: ['btc', 'eth', 'usdt']
+                  fiat: 'try'
+              usd:
+                summary: USD ile
+                value:
+                  symbols: ['btc', 'eth']
+                  fiat: 'usd'
+      responses:
+        '200':
+          description: Başarılı response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BulkMarketResponse'
+        '400':
+          description: Geçersiz parametre - Liste boş olamaz
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 400
+                  error:
+                    type: string
+                    example: 'validation_error'
+                  message:
+                    type: string
+                    example: 'Liste boş olamaz, en azından 1 coin olmalı'
+        '429':
+          description: Rate limit aşıldı
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 429
+                  message:
+                    type: string
+                    example: 'Rate limit exceeded. Try again later.'
+
   /health:
     get:
       tags:
@@ -339,6 +406,48 @@ components:
         - error
         - message
         - requestId
+
+    BulkMarketRequest:
+      type: object
+      properties:
+        symbols:
+          type: array
+          items:
+            type: string
+          minItems: 1
+          description: Kripto para sembolleri listesi
+          example: ['btc', 'eth', 'usdt']
+        fiat:
+          type: string
+          enum: [try, usd]
+          default: try
+          description: Fiat para birimi
+          example: 'try'
+      required:
+        - symbols
+
+    BulkMarketResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/MarketResponse'
+          description: Market verileri listesi
+        count:
+          type: integer
+          description: Toplam coin sayısı
+          example: 3
+        failed:
+          type: array
+          items:
+            type: string
+          description: Başarısız olan coinler
+          example: ['invalidcoin']
+      required:
+        - data
+        - count
+        - failed
 
   securitySchemes: {}
 

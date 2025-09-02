@@ -1,4 +1,12 @@
-import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Query,
+  UseGuards,
+  Post,
+  Body,
+} from '@nestjs/common';
 import { ThrottlerGuard } from '@nestjs/throttler';
 import {
   ApiTags,
@@ -7,12 +15,23 @@ import {
   ApiQuery,
   ApiResponse,
   ApiExtraModels,
+  ApiBody,
 } from '@nestjs/swagger';
 import { MarketService } from './market.service';
-import { MarketQueryDto, MarketResponseDto } from './dto/market.dto';
+import {
+  MarketQueryDto,
+  MarketResponseDto,
+  BulkMarketQueryDto,
+  BulkMarketResponseDto,
+} from './dto/market.dto';
 
 @ApiTags('Market Data')
-@ApiExtraModels(MarketResponseDto, MarketQueryDto)
+@ApiExtraModels(
+  MarketResponseDto,
+  MarketQueryDto,
+  BulkMarketQueryDto,
+  BulkMarketResponseDto,
+)
 @Controller('market')
 @UseGuards(ThrottlerGuard)
 export class MarketController {
@@ -102,5 +121,83 @@ export class MarketController {
     @Query() query: MarketQueryDto,
   ): Promise<MarketResponseDto> {
     return this.marketService.getMarketCard(symbol, query.fiat);
+  }
+
+  @Post('bulk')
+  @ApiOperation({
+    summary: 'Çoklu kripto para market verilerini getirir',
+    description: `
+      Belirtilen kripto para listesi için detaylı market bilgilerini getirir.
+      Veriler CoinGecko ve Alternative.me API'lerinden alınır.
+
+      **Özellikler:**
+      - En az 1 coin sembolü gereklidir
+      - Başarısız olan coinler 'failed' listesinde döner
+      - Başarılı olan coinler 'data' listesinde döner
+
+      **Desteklenen semboller:** btc, eth, usdt, bnb, sol, xrp, doge, ada, trx, avax, shib, link, dot, bch, near, matic, ltc, uni, atom ve 90+ kripto para daha...
+    `,
+  })
+  @ApiBody({
+    type: BulkMarketQueryDto,
+    description: 'Kripto para sembolleri listesi ve fiat para birimi',
+    examples: {
+      example1: {
+        summary: 'Temel kullanım',
+        value: {
+          symbols: ['btc', 'eth', 'usdt'],
+          fiat: 'try',
+        },
+      },
+      example2: {
+        summary: 'USD ile',
+        value: {
+          symbols: ['btc', 'eth'],
+          fiat: 'usd',
+        },
+      },
+    },
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Başarılı response',
+    type: BulkMarketResponseDto,
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Geçersiz parametre - Liste boş olamaz',
+    schema: {
+      type: 'object',
+      properties: {
+        statusCode: { type: 'number', example: 400 },
+        timestamp: { type: 'string', example: '2025-09-01T16:55:00.000Z' },
+        path: { type: 'string', example: '/market/bulk' },
+        method: { type: 'string', example: 'POST' },
+        error: { type: 'string', example: 'validation_error' },
+        message: {
+          type: 'string',
+          example: 'Liste boş olamaz, en azından 1 coin olmalı',
+        },
+      },
+    },
+  })
+  @ApiResponse({
+    status: 429,
+    description: 'Rate limit aşıldı',
+    schema: {
+      type: 'object',
+      properties: {
+        statusCode: { type: 'number', example: 429 },
+        message: {
+          type: 'string',
+          example: 'Rate limit exceeded. Try again later.',
+        },
+      },
+    },
+  })
+  async getBulkMarketData(
+    @Body() body: BulkMarketQueryDto,
+  ): Promise<BulkMarketResponseDto> {
+    return this.marketService.getBulkMarketData(body.symbols, body.fiat);
   }
 }
