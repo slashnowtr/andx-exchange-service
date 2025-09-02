@@ -1,0 +1,45 @@
+name: Deploy to EC2
+
+# CI Pipeline başarıyla bittikten sonra çalış
+on:
+  workflow_run:
+    workflows: ["CI Pipeline"]
+    types:
+      - completed
+    branches: [main]
+
+jobs:
+  deploy:
+    # Sadece CI başarılıysa ve development'den gelmişse
+    if: |
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_branch == 'development'
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: 🚀 Deploy to EC2 via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          port: ${{ secrets.EC2_PORT }}
+          script: |
+            cd /home/ubuntu/andx-exchange-service
+
+            echo "🔁 Pulling latest code..."
+            git pull origin main
+
+            echo "🔄 Restarting service..."
+            docker-compose down
+            docker-compose --profile production up -d --build
+
+            echo "🔍 Health check..."
+            sleep 30
+            if curl -f http://localhost:3000/health; then
+              echo "✅ Deployment successful!"
+            else
+              echo "❌ Health check failed!"
+              exit 1
+            fi

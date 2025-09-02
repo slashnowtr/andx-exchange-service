@@ -38,11 +38,11 @@ COPY --from=builder --chown=nestjs:nodejs /app/package.json ./package.json
 
 # Create .env file with default values (can be overridden by environment variables)
 RUN echo "PORT=3000" > .env && \
-    echo "COINGECKO_API_KEY=" >> .env && \
-    echo "RATE_LIMIT_TTL=60" >> .env && \
-    echo "RATE_LIMIT_LIMIT=60" >> .env && \
-    echo "DEFAULT_CACHE_TTL_MS=60000" >> .env && \
-    echo "ALLOW_ORIGINS=*" >> .env
+  echo "COINGECKO_API_KEY=" >> .env && \
+  echo "RATE_LIMIT_TTL=60" >> .env && \
+  echo "RATE_LIMIT_LIMIT=60" >> .env && \
+  echo "DEFAULT_CACHE_TTL_MS=60000" >> .env && \
+  echo "ALLOW_ORIGINS=*" >> .env
 
 RUN chown nestjs:nodejs .env
 
